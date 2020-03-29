@@ -21,5 +21,6 @@ int main(void){
 // 매개변수로 해당 오류의 errno가 들어간다.
 // 전달받은 errno의 메시지를 출력
 
+
 // #include<string.h>
 // char *strerror(int errno)
