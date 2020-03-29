@@ -7,12 +7,16 @@
 
 int main(void){
     int fd;
+    mode_t mode;
 
-    fd = open("unix.txt", O_CREAT | O_EXCL, 0644);
+    mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+    fd = open("unix.txt", O_CREAT, mode);
     if(fd == -1){ // system call은 실패 시 -1 리턴
-        perror("Excl"); // 오류 메시지로 Excl: 오류메시지 형태로 출력
+        perror("Creat"); // 오류 메시지로 Excl: 오류메시지 형태로 출력
         exit(1);
     }
+
+    printf("unix.txt : fd = %d\n", fd);
     close(fd);
     // open 했던 파일은 닫아주는게 인지상정
     return 0;
