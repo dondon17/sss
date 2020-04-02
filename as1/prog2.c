@@ -30,6 +30,7 @@ int main(void){
         i++;
     }
 
+    printf("   학번  평균   \n");
     for(int i=0; i<4; i++){
         if(i==0) printf("%s ", arr[i]);
         else sum += atoi(arr[i]);
