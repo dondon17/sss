@@ -18,25 +18,31 @@ int main(void){
     }
 
     n = read(fd, buf, BUFSIZ);
+    for(int i=0; i<n; i++){
+        if(buf[i] == '\n')
+            buf[i] = ' ';
+    }
 
     char *ptr = strtok(buf, " ");
-    while(ptr != NULL){
-        arr[i++] = ptr;
+    while(ptr != NULL) {
+        arr[i] = ptr;
         ptr = strtok(NULL, " ");
+        i++;
     }
-    printf("%s", arr[3]);
-    // for(int i = 1; i < 4; i++) {
-    //     sum += atoi(arr[i]);
-    // }
-    // printf("%s %.2lf\n", arr[0], sum/3.0);
-    // sum = 0.0;
 
-    // for(int i = 4; arr[i] != NULL; i++) {
-    //     sum += atoi(arr[i]);
-    // }
-    // printf("%s %.2lf\n", arr[3], sum/3.0);
+    for(int i=0; i<4; i++){
+        if(i==0) printf("%s ", arr[i]);
+        else sum += atoi(arr[i]);
+    }
+    printf("%.2lf\n", sum/3.0);
+    sum = 0;
 
-    if(n == -1) perror("read");
+    for(int i=4; i<8; i++){
+        if(i==4) printf("%s ", arr[i]);
+        else sum += atoi(arr[i]);
+    }
+    printf("%.2lf\n", sum/3.0);
+
     close(fd);
     return 0;
 }
