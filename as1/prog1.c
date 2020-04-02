@@ -13,6 +13,7 @@ int main(void){
         perror("fopen: data");
         exit(1);
     }
+    
     printf("   학번   평균   \n");
     while((n = fscanf(fp, "%d %d %d %d", &id, &s1, &s2, &s3)) != EOF)
         printf("%d : %.2lf\n", id, (s1+s2+s3)/3.0);
