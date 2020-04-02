@@ -12,7 +12,7 @@ int main(void){
         exit(1);
     }
 
-    dup2(fd, 1);
+    dup2(fd, 1); // dup함수보다 간단하게 redirection시킬 수 있음.
 
     printf("dup2 : standard output redirection\n");
     close(fd);
