@@ -16,6 +16,6 @@ ex: $(OBJS)
 ex42.o: ex42.c
 	$(CC) $(CFLAGS) -c ex42.c
 
-# clean 역할이 뭔지 모르겠음
+# object 파일과 exe파일 삭제
 clean:
 	rm -f $(OBJS) ex core

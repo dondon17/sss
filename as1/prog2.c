@@ -30,16 +30,16 @@ int main(void){
         i++;
     }
 
-    printf("   학번  평균   \n");
+    printf("   학번   평균   \n");
     for(int i=0; i<4; i++){
-        if(i==0) printf("%s ", arr[i]);
+        if(i==0) printf("%s : ", arr[i]);
         else sum += atoi(arr[i]);
     }
     printf("%.2lf\n", sum/3.0);
     sum = 0;
 
     for(int i=4; i<8; i++){
-        if(i==4) printf("%s ", arr[i]);
+        if(i==4) printf("%s : ", arr[i]);
         else sum += atoi(arr[i]);
     }
     printf("%.2lf\n", sum/3.0);
