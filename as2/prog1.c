@@ -16,17 +16,26 @@
 #include<fcntl.h>
 int main(int argc, const char *argv[]){
     struct stat buf;
-    char op[3]; // operand(u, g, o, r, w, x)와 operator(+, -)가 저장될 문자 배열
+    // operand(u, g, o, r, w, x)와 operator(+, -)가 저장될 문자 배열
+    char op[3]; 
     // 명령행 인자가 form에 맞지 않는 경우 종료
     if(argc != 3){
         printf("input arguments are not matching\n");
         exit(1);
     }
+    // argv[2]로 받은 파일이 없는 경우 종료
+    if(access(argv[2], R_OK) == -1){
+        perror(argv[2]);
+        exit(1);
+    }
     // stat 함수로 전달된 파일명의 상태를 buf에 저장
     stat(argv[2], &buf);
-    strcpy(op, argv[1]); // argv[1]로 전달된 식을 하나하나 문자로 저장하기 위한 작업
-
-    // 권한을 추가하는 경우에는 or 연산(|)으로 추가
+    
+    // argv[1]로 전달된 식을 하나하나 문자로 저장하기 위한 작업
+    strcpy(op, argv[1]);
+    
+    // 권한을 추가하는 경우
+    // or 연산(|)으로 추가
     if(op[1] == '+'){
         if(op[0] == 'u'){
             if(op[2] == 'r') buf.st_mode |= S_IRUSR;
@@ -44,7 +53,8 @@ int main(int argc, const char *argv[]){
             if(op[2] == 'x') buf.st_mode |= S_IXOTH;
         }
     }
-    // 권한을 해제하는 경우 권한비트에 not연산(~)을 시켜준뒤 전체 권한에 AND연산(&) 수행
+    // 권한을 해제하는 경우 
+    // 권한비트에 not연산(~)을 시켜준뒤 전체 권한에 AND연산(&) 수행
     if(op[1] == '-'){
          if(op[0] == 'u'){
             if(op[2] == 'r') buf.st_mode &= ~(S_IRUSR);
