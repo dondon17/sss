@@ -1,0 +1,2 @@
+standard out is out.txt file in child!
+
