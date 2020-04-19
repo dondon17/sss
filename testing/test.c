@@ -27,7 +27,8 @@ int main(int argc, char **argv)
     // 본격적으로 지정한 파일들을 표준 출력, 입력으로 사용
     dup2(fdout, STDOUT_FILENO); 
     dup2(fdin, STDIN_FILENO);
-
+    dup2(1, 2); // 표준 err도 fdout 파일로 변경해줌.
+    
     // 자식에게 redirection된 표준 입/출력을 그대로 전달
     pid_t pid = fork();
     if(pid > 0){ // 부모 프로세스
