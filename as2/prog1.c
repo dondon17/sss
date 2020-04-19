@@ -4,7 +4,7 @@
  *  학  과: 사이버보안학과
  *  학  번: 201520893
  *  파일명: prog1.c
- *  작성일: 2020 / 04 / 17
+ *  작성일: 2020 / 04 / 18
  *  마감일: 2020 / 04 / 22
 **************************************************************/
 #include<stdio.h>
@@ -20,6 +20,11 @@ int main(int argc, const char *argv[]){
     // 명령행 인자가 form에 맞지 않는 경우 종료
     if(argc != 3){
         printf("input arguments are not matching\n");
+        exit(1);
+    }
+    // argv[2]로 전달 받은 파일이 없는 경우 종료
+    if(access(argv[2], R_OK) == -1){
+        perror(argv[2]);
         exit(1);
     }
     // stat 함수로 전달된 파일명의 상태를 buf에 저장
