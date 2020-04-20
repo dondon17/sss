@@ -22,6 +22,14 @@ int main(int argc, char **argv){
     cur = lseek(fd, 0, SEEK_CUR);
     printf("Offset cur= %d\n", (int)cur);
 
+    start = lseek(fd, 5, SEEK_SET);
+    n = read(fd, buf, BUFSIZ);
+    buf[n] = '\0';
+
+    printf("Offset start= %d\nRead str= %sn= %d\n", (int)start, buf, n);
+
+    close(fd);
+
     return 0;
 }
 
