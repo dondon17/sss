@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<unistd.h>
-#include<errno.h>
+#include<sys/errno.h>
 #include<stdlib.h>
 
 extern int errno;
@@ -12,7 +12,7 @@ int main(void){
         printf("errno = %d\n", errno);
         exit(1);
     }
-    
+
     close(fp);
     return 0;
 }
