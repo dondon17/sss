@@ -12,6 +12,8 @@ int main(void){
         printf("errno = %d\n", errno);
         exit(1);
     }
+    
+    close(fp);
     return 0;
 }
 
