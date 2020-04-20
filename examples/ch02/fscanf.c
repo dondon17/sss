@@ -24,3 +24,9 @@ int main(int argc, char **argv){
 
     return 0;
 }
+
+// 형식 기반 입출력 함수 : fscanf, fprintf
+// fprintf(FILE *fp, ...)
+// fp가 가리키는 파일에 지정된 형식으로 출력한다.
+// fscanf(FILE *fp, ...)
+// fp가 가리키는 파일에서 지정된 형식으로 읽어온다. 이 때 파일에 적혀있는 형식대로 변수를 사용해야한다.
