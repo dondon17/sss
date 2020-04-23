@@ -7,6 +7,7 @@
 #include<fcntl.h>
 #include<pwd.h>
 #include<string.h>
+#include "apue.h"
 
 int main(void){
     struct passwd* pw;
