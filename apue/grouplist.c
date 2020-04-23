@@ -6,7 +6,7 @@
 #include<grp.h>
 #include<fcntl.h>
 #include<pwd.h>
-
+#include<string.h>
 
 int main(void){
     struct passwd* pw;
