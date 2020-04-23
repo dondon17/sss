@@ -16,5 +16,8 @@ int main(void){
     printf("user name   : %s\n", sp->sp_namp);
     printf("user passwd : %s\n", sp->sp_pwdp);
 
+    while((sp = getspent()) != NULL){
+        printf("user name : %s\t passwd : %s\n", sp->sp_namp, sp->sp_pwdp);
+    }
     return 0;
 }
