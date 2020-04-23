@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 2cd7388d6cf0a0a86795eae14fdbb6b0be81c0ea dondon17 <qwerqw889@ajou.ac.kr> 1587556910 +0900	clone: from https://github.com/dondon17/sss.git
+2cd7388d6cf0a0a86795eae14fdbb6b0be81c0ea 58083a0844e943ef0138c1dce69464c9258ed120 dondon17 <qwerqw889@ajou.ac.kr> 1587556983 +0900	commit: 파일명으로 접근 권한 변경 : chmod
+58083a0844e943ef0138c1dce69464c9258ed120 dc05f18c4073cd6efb731de6a8ad915467e0fbdb dondon17 <qwerqw889@ajou.ac.kr> 1587557872 +0900	commit: 하드링크 생성 : link
+dc05f18c4073cd6efb731de6a8ad915467e0fbdb d89798864ec2f29bba835bbeb42c73885236479e dondon17 <qwerqw889@ajou.ac.kr> 1587558173 +0900	commit: symbolic link 생성하고 stat, lstat으로 정보 읽어오기
+d89798864ec2f29bba835bbeb42c73885236479e 483f2240f58a13cde6ba812f309c00debc836e21 dondon17 <qwerqw889@ajou.ac.kr> 1587558297 +0900	commit: test file
+483f2240f58a13cde6ba812f309c00debc836e21 e4729cc0d97aac188a7464d6a753c67a215cca4e dondon17 <qwerqw889@ajou.ac.kr> 1587558324 +0900	commit: builder
