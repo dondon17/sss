@@ -31,16 +31,13 @@ int main(int argc, char **argv)
     
     // 자식에게 redirection된 표준 입/출력을 그대로 전달
     pid_t pid = fork();
-    if(pid > 0){ // 부모 프로세스
+    if(pid == 0){ // 자식 프로세스
+        execlp("ls", "ls", "-a", (char*)NULL);
+        exit(0);
+    }
+    else if(pid > 0){ // 부모 프로세스
         int stat=0;
         wait(&stat);
-    }
-    else if(pid == 0){ // 자식 프로세스
-        char *buf;
-        int n;
-        puts("standard out is out.txt file in child!\n");
-        //execlp("ls", "ls", "-a", (char*)NULL);
-        exit(0);
     }
     else{ // fork 실패
         perror("fork");
