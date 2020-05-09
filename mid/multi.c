@@ -1,3 +1,4 @@
+
 #include<unistd.h>
 #include<string.h>
 #include<stdio.h>
@@ -15,7 +16,8 @@ int main(void){
     FILE *a, *b, *c, *d;
     pid_t pid[N_CHILD];
 
-    double time_spent, res = 0, sum[4] = {0, };
+    double time_spent;
+    double res = 0, sum[4] = {0, };
     
     int status;
     // 타이머 시작
@@ -28,6 +30,7 @@ int main(void){
             perror("fail");
             exit(1);
         }
+        // 생성된 자식 프로세스들에서 각각 파일을 하나씩 도맡아 열고 연산 수행
         else if(pid[i] == 0){
             switch (i) {
                 case 0: 
@@ -39,6 +42,7 @@ int main(void){
                         fscanf(a, "%d ", &arr[i]);
                         sum[0] += arr[i];
                     }
+                    fclose(a);
                     exit(0);
                     break;
 
@@ -51,6 +55,7 @@ int main(void){
                         fscanf(b, "%d ", &arr[i]);
                         sum[1] += arr[i];
                     }
+                    fclose(b);
                     exit(1);
                     break;
 
@@ -63,6 +68,7 @@ int main(void){
                         fscanf(c, "%d ", &arr[i]);
                         sum[2] += arr[i];
                     }    
+                    fclose(c);
                     exit(2);
                     break;
 
@@ -75,6 +81,7 @@ int main(void){
                         fscanf(d, "%d ", &arr[i]);
                         sum[3] += arr[i];
                     }
+                    fclose(d);
                     exit(3);
                     break;
             }
@@ -90,11 +97,12 @@ int main(void){
 
     // 각각의 파일에서 구한 sub sum들을 모두 총합
     for(int i=0; i<4; i++) res+=sum[i];
-    printf("%f\n", res);
+    printf("total sum : %g\n", res);
     printf("***Timer end***\n");
     end = clock();
     
+    // 소요된 시간 계산 후 출력
     time_spent = (double)(end - start);
-    printf("time: %f\n", time_spent);
+    printf("time: %gms\n", time_spent);
     return 0;
 }

@@ -53,11 +53,11 @@ int main(void){
     }
     fclose(d);
 
-    printf("total sum : %f\n", sum);
+    printf("total sum : %g\n", sum);
     // timer end...
     end = clock();
     printf("***Timer end***\n");
     time_spent = (double)(end - start);
-    printf("time: %f\n", time_spent);
+    printf("time: %gms\n", time_spent);
     return 0;
 }
