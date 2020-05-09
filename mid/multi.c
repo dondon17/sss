@@ -7,6 +7,7 @@
 #include<sys/types.h>
 
 #define N_CHILD 4
+
 int arr[100000] = {0, };
 
 int main(void){
@@ -17,11 +18,12 @@ int main(void){
     double time_spent, res = 0, sum[4] = {0, };
     
     int status;
-    printf("***Timer start***\n");
+    // 타이머 시작
+    printf("***Timer start***\n"); 
     start = clock();
 
     for(int i=0; i<N_CHILD; i++){
-        pid[i] = vfork();
+        pid[i] = vfork(); // fork 열었을 시 부모 프로세스의 변수들을 공유하지 않아 vfork로 생성
         if(pid[i] < 0){
             perror("fail");
             exit(1);
@@ -78,7 +80,15 @@ int main(void){
             }
         }
     }
-    wait(&status);
+    
+    // 자식프로세스들의 종료상태를 정상적으로 처리하는지 확인하기 위해 출력
+    int pid_;
+    for(int i=0; i<N_CHILD; i++) {
+        pid_ = wait(&status);
+        printf("child %ld exited...(status: %d)\n", (long)pid_, status); 
+    }
+
+    // 각각의 파일에서 구한 sub sum들을 모두 총합
     for(int i=0; i<4; i++) res+=sum[i];
     printf("%f\n", res);
     printf("***Timer end***\n");

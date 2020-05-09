@@ -5,12 +5,12 @@
 #include<time.h>
 
 int main(void){
-    clock_t start, end;
-    FILE *a, *b, *c, *d;
-    double time_spent;
+    clock_t start, end; // 수행시간 제기 위한 clock 변수
+    FILE *a, *b, *c, *d; 
+    double time_spent; // 소요된 시간 저장
     double sum = 0;
-    int arr[100000] = {0, };
-    // timer start......
+    int arr[100000] = {0, }; // 각각의 파일에서 10만개의 수를 읽어오기 위함
+    // timer start
     printf("***Timer start***\n");
     start = clock();
 
@@ -31,6 +31,7 @@ int main(void){
         exit(1);
     }    
     
+    // 각각의 파일을 순서대로 읽어 합계 계산
     for(int i=0; i<100000; i++) {
         fscanf(a, "%d ", &arr[i]);
         sum += arr[i];
@@ -53,6 +54,7 @@ int main(void){
     fclose(d);
 
     printf("total sum : %f\n", sum);
+    // timer end...
     end = clock();
     printf("***Timer end***\n");
     time_spent = (double)(end - start);
