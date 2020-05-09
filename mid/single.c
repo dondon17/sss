@@ -29,9 +29,7 @@ int main(void){
     if((d=fopen("d.txt", "r")) == NULL){
         perror("d.txt");
         exit(1);
-    }
-    int len = sizeof(arr) / sizeof(arr[0]);
-    
+    }    
     
     for(int i=0; i<100000; i++) {
         fscanf(a, "%d ", &arr[i]);
