@@ -39,6 +39,6 @@ int main(int argc, char** argv){
     2. 다르 프로세스의 thread에 의해 취소된 경우
     3. thread 자신이 pthread_exit 호출한 경우
 
-    또한 pthread_join함수는 인자로 지정된 쓰레드가 pthread_exit을 호출하거나 정상 종료될때까지 대기한다고 보면 된다.
+    또한 pthread_join함수는 인자로 지정된 쓰레드가 pthread_exit을 호출하거나 정상 종료될때까지 대기한다고 보면 된다. rkxek
     즉, 프로세스 생성 후, 자식 프로세스를 기다릴 때 사용하는 wait함수와 동일한 역할을 한다.
 */
