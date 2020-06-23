@@ -71,10 +71,10 @@ void* clients_func(void* soc){
 
 void printserver(char* port){
     system("clear");
-    printf("========= 채팅 서버 정보 =========\n");
-    printf("채팅 서버 port   : %s\n", port);
-    printf("채팅 서버 최대인원 : %d\n", N_CLIENT);
-    printf("========== 기다리는중.. ==========\n");
+    printf("========= SERVER INFO =========\n");
+    printf("PORT NUMBER  : %s\n", port);
+    printf("MAXIMUN USER : %d\n", N_CLIENT);
+    printf("========== WAITING... ==========\n");
 }
 
 int main(int argc, char **argv){
@@ -91,7 +91,7 @@ int main(int argc, char **argv){
 
     // 명령행 입력 형식에 맞지 않는 경우 종료
     if(argc != 2){
-        printf("포트번호를 입력하세요.\n");
+        printf("Enter Port number.\n");
         exit(1);
     }
 
@@ -137,7 +137,7 @@ int main(int argc, char **argv){
         pthread_mutex_lock(&mutex);
         if(count>N_CLIENT){
             pthread_mutex_unlock(&mutex);
-            printf("채팅 방의 인원이 초과되어 방이 폭파되었습니다...\n");
+            printf("NO MORE SPACE FOR USER...\n");
             break;
         }
         client_sockets[count++] = client_socket;
@@ -147,8 +147,8 @@ int main(int argc, char **argv){
         pthread_create(&th, NULL, clients_func, (void*)&client_socket);
         pthread_detach(th); // block되지 않고 Join 기능 수행
 
-        printf("연결된 클라이언트 ip > %s\n", inet_ntoa(client_addr.sin_addr));
-        printf("현재 인원(%d/50)\n", count);
+        printf("Connected Client's ip > %s\n", inet_ntoa(client_addr.sin_addr));
+        printf("Current users(%d/50)\n", count);
     }
 
     close(server_socket);

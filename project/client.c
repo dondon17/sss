@@ -41,7 +41,7 @@ int main(int argc, char **argv){
     
     // 사용자는 명령행에 연결할 서버(local host)의 IP주소, 열린 포트 번호, 채팅방에 입장할 이름 순으로 입력
     if(argc != 4){
-        printf("Enter ip number, port number, and your name...\n");
+        printf("Enter 1. ip number, 2. port number, and 3. your name...\n");
         exit(1);
     }
 
@@ -113,16 +113,16 @@ void print_Manual(){
 
     system("clear");
 
-    printf("========= 사용자/서버 정보 =========\n");
-    printf("채팅 서버 ip   : %s\n", connect_ip);
-    printf("채팅 서버 port : %s\n", connect_port);
-    printf("채팅 유저 이름 : %s\n\n", username);
+    printf("========= USER / SERVER INFO =========\n");
+    printf("Chat Server IP  : %s\n", connect_ip);
+    printf("Chat Server PORT: %s\n", connect_port);
+    printf("Chat User Name  : %s\n\n", username);
 
-    printf("============= 메뉴얼 =============\n");
-    printf("메뉴를 보고 싶다면 man을 입력하세요.\n");
-    printf("이름을 변경하고 싶다면 1을 입력하세요.\n");
-    printf("채팅창을 갱신하고 싶다면 2를 입력하세요.\n");
-    printf("채팅방을 나가고 싶다면 q또는 Q를 입력하세요.\n");
+    printf("=============== MANUAL ===============\n");
+    printf("To see Manual, enter > man\n");
+    printf("To change Name, enter > 1\n");
+    printf("To clear log, enter > 2\n");
+    printf("To exit chatting room, enter q or Q\n");
     printf("======================================\n\n");
 
 }
@@ -130,12 +130,12 @@ void print_Manual(){
 void select_Menu(){
     int choice;
 
-    printf("\n\t====== 메뉴를 선택하세요 =====\n");
-    printf("\t이름 변경   > 1\n");
-    printf("\t메뉴얼 보기 > 2\n");
-    printf("\t메뉴창을 나가려면 아무키나 누르세요.\n");
+    printf("\n\t====== SELECT MENU ======\n");
+    printf("\tChange Name : 1\n");
+    printf("\tClear Log   : 2\n");
+    printf("\tBack to chat: enter any key\n");
     printf("\t===========================\n");
-    printf("\t입력 >> "); scanf("%d", &choice);
+    printf("\tenter >> "); scanf("%d", &choice);
     getchar();
 
     switch (choice){
@@ -143,10 +143,11 @@ void select_Menu(){
         change_Name();
         break;
     case 2:
-        print_Manual();
+        system("clear");
+        printf("log cleared...\n");
         break;
     default:
-        printf("채팅을 재개합니다.\n");
+        printf("Continue chatting...\n\n");
         break;
     }
 }
@@ -154,26 +155,26 @@ void select_Menu(){
 // 이름 변경 함수
 void change_Name(){
     char temp[20];
-    printf("\n\t새 이름 입력 >> "); 
+    printf("\n\tNew Name >> "); 
     scanf("%s", temp);
     sprintf(username, "[%s]", temp);
-    printf("\n\t이름이 변경되었습니다.\n");
+    printf("\n\tName changed to [%s].\n", temp);
 }
 
 // 송신 기능 쓰레드
 void *send_th_func(void *soc){
 
     int client_socket = *((int*)soc); // 쓰레드 생성시 생성 및 연결된 소켓을 인자로 전달
-
+    char leave_msg[BUFSIZE];
     char client_msg[BUFSIZE]; // 사용자 이름, 메시지 내용, 보낸 시간을 합친 문자열
     char userinfo[64];
     char *msg_time = (char*)malloc(sizeof(char)*10); // 메시지 입력 시간 출력
     msg = (char*)malloc(sizeof(char)*257); // 입력 메시지
-
-    sprintf(userinfo, "%s 님이 입장했습니다\n", username);
+    char *ans = (char*)malloc(sizeof(char)*3);
+    sprintf(userinfo, "%s joined the room.\n", username);
     send(client_socket, userinfo, strlen(userinfo), 0);
 
-    printf("채팅방에 입장하셨습니다. 지금부터 메시지를 주고받을 수 있습니다.\n");
+    printf("You entered the chatting room.\n");
 
     while(1){
         
@@ -187,13 +188,28 @@ void *send_th_func(void *soc){
 
         // q나 Q 입력 시 열었던 소켓을 닫고 통신 종료
         else if(!strcmp(msg, "q\n") || !strcmp(msg, "Q\n")){
-            close(client_socket);
-            exit(1);
+            fflush(stdin);
+            printf("Do you want to exit the room? > ");
+            fgets(ans, sizeof(ans), stdin);
+            if(!strcmp(ans, "Y\n") || !strcmp(ans, "y\n")){
+                fflush(stdin);
+                sprintf(leave_msg, "%s%s", username, " left the room\n");
+                send(client_socket, leave_msg, strlen(leave_msg), 0);
+                close(client_socket);
+                exit(1);
+            }
+            else{
+                fflush(stdin);
+                printf("continue chat...\n");
+            }
+            
         }
 
-        // 사용자의 이름과 입력한 메시지를 함께 전송
-        sprintf(client_msg, "%s[%s]%s", username, msg_time, msg);
-        send(client_socket, client_msg, strlen(client_msg), 0);
+        // 입력 메시지가 q나 man이 아닌 경우 사용자의 이름과 입력한 메시지를 함께 전송
+        else{
+            sprintf(client_msg, "%s[%s]%s", username, msg_time, msg);
+            send(client_socket, client_msg, strlen(client_msg), 0);
+        }
     }
 
     return NULL;
