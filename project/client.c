@@ -133,6 +133,7 @@ void select_Menu(){
     printf("\n\t====== SELECT MENU ======\n");
     printf("\tChange Name : 1\n");
     printf("\tClear Log   : 2\n");
+    printf("\tSee manual  : 3\n");
     printf("\tBack to chat: enter any key\n");
     printf("\t===========================\n");
     printf("\tenter >> "); scanf("%d", &choice);
@@ -145,6 +146,9 @@ void select_Menu(){
     case 2:
         system("clear");
         printf("log cleared...\n");
+        break;
+    case 3:
+        print_Manual();
         break;
     default:
         printf("Continue chatting...\n\n");
@@ -188,11 +192,9 @@ void *send_th_func(void *soc){
 
         // q나 Q 입력 시 열었던 소켓을 닫고 통신 종료
         else if(!strcmp(msg, "q\n") || !strcmp(msg, "Q\n")){
-            fflush(stdin);
             printf("Do you want to exit the room? > ");
             fgets(ans, sizeof(ans), stdin);
             if(!strcmp(ans, "Y\n") || !strcmp(ans, "y\n")){
-                fflush(stdin);
                 sprintf(leave_msg, "%s%s", username, " left the room\n");
                 send(client_socket, leave_msg, strlen(leave_msg), 0);
                 close(client_socket);

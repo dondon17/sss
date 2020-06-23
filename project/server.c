@@ -29,7 +29,7 @@ void send_msg_func(char *msg, int len){
 
     // 소켓 배열에 저장된 클라이언트들에게 메시지 전송
     for(int i=0; i<count; i++){
-        write(client_sockets[i], msg, len);
+        send(client_sockets[i], msg, len, 0);
     }
 
     // 메시지를 모두에게 전송후에 뮤텍스 락 해제
@@ -147,7 +147,6 @@ int main(int argc, char **argv){
         pthread_create(&th, NULL, clients_func, (void*)&client_socket);
         pthread_detach(th); // block되지 않고 Join 기능 수행
 
-        printf("Connected Client's ip > %s\n", inet_ntoa(client_addr.sin_addr));
         printf("Current users(%d/50)\n", count);
     }
 
